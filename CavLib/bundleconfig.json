@@ -1,0 +1,17 @@
+[
+  {
+    "outputFileName": "cavlib.js",
+    "inputFiles": [
+      "src/1start.part.js",
+      // 坐标点计算
+      "src/data1_line.part.js",
+      "src/data2_cirs.part.js",
+      // 绘画
+      "src/aid.part.js",
+      "src/curve.part.js",
+      //
+      "src/2end.part.js"
+    ],
+    "minify": { "enabled": false }
+  }
+]

@@ -1,0 +1,49 @@
+﻿@*
+    1.模板页名字规定: "页面名字.part.cshtml""
+    2.内容容器固定如下:
+  <div class="doc-part-box" id="页面名字">
+    <h2>标题</h2>
+    ......
+    ......
+  </div>
+*@
+<div class="doc-part-box" id="cavlib">
+  <h2>全局对象</h2>
+  <p>内部对象canvalib,是一个类数组对象.也是模仿jQuery的,里面包含canvas元素引用和ctx(2D)绘画对象和库提供的工具方法.</p>
+  <pre class="bg-gray-lt">
+
+    // 类数组对象,存放用id选取的canvas元素和2D绘画对象. 
+    function canvalib(canvasId){}
+
+    // 属性
+    this.canvas
+    this.ctx
+
+    // 工厂函数,实例化这个对象.
+    function factory(selector){
+        return new canvalib(canvasId);
+    }
+
+    // 引用对象 外部调用这个函数使用cavlib对象.
+    window.cavlib = factory
+     
+</pre>
+  <br />
+  <p class="article-title">cavlib对象实例方法</p>
+  <pre class="bg-gray-lt">
+
+    // 给canva元素设置style
+    // 0:灰色背景 1:无背景
+    this.style(num = 0)
+ 
+</pre>
+  <br />
+  <p class="article-title">扩展cavlib对象实例方法</p>
+  <pre class="bg-gray-lt">
+
+    // 为cavlib对象添加实例方法 prototype上的方法.
+    // json 一个方法名和函数值的json对像.方法名要用""号包起来.
+    cavlib.extend(json)
+
+</pre>
+</div>
