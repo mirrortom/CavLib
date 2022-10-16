@@ -1,2 +1,2 @@
-# CavLib
-canvas�滭�Ŀ�
+﻿# CavLib
+canvas绘画的库
