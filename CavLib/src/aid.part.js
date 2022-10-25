@@ -54,31 +54,164 @@ factory.extend({
 
 factory.extend({
     /**
-     * 画坐标轴辅助线:以画布中心为原点,箭头方向:,X轴右方向,Y轴上方向
+     * 画直角坐标轴辅助线:箭头方向:,X轴右方向,Y轴上方向
      * 
-     * @param {number} style 风格: 虚线=0,实线=1
+     * @param {number} style 风格: 0(原点在中心,轴长等于画布长,虚线),1(同0,实线),2或以上(自定义原点位置和轴长,偶数时虚线)
      * @param {number} oX 原点x坐标
      * @param {number} oY 原点y坐标
-     * @param {number} oXLen x轴长度
-     * @param {number} oYLen y轴长度
+     * @param {number} oXLen x正轴长度
+     * @param {number} oYLen y正轴长度
+     * @param {number} oXLen1 x负轴长度
+     * @param {number} oYLen1 y负轴长度
      * @returns {any} return this
      */
-    'xyAxis': function (style = 0, oX = null, oY = null, oXLen = 0, oYLen = 0) {
-        let x = oX || this.canvas.width / 2;
-        let y = oY || this.canvas.height / 2;
-        let xLen = oXLen || this.canvas.width;
-        let yLen = oYLen || this.canvas.height;
+    'xyAxis': function (style = 0, oX = 0, oY = 0, oXLen = 0, oYLen = 0, oXLen1 = 0, oYLen1 = 0) {
+        let x = oX, y = oY, y, xlen = oXLen, ylen = oYLen, xlen1 = oXLen1, ylen1 = oYLen1;
+        if (style < 2) {
+            x = this.canvas.width / 2;
+            y = this.canvas.height / 2;
+            xlen = x;
+            ylen = y;
+            xlen1 = x;
+            ylen1 = y;
+        }
         //
         this.ctx.save();
         this.ctx.translate(x, y);
         // 线条风格
-        if (style == 0) {
+        if (style % 2 == 0) {
             this.ctx.setLineDash([2]);
         }
         // x,y轴
         this.ctx.beginPath();
-        this.lineArrow([-x, 0, x - 10, 0]);
-        this.lineArrow([0, y, 0, -y + 10]);
+        this.lineArrow([-xlen1, 0, xlen - 10, 0]);
+        this.lineArrow([0, ylen1, 0, -ylen + 10]);
+        this.ctx.restore();
+        return this;
+    }
+});
+
+factory.extend({
+    /**
+     * 根据对角线上2点画出矩形
+     * 
+     * @param {number} x1 点x坐标
+     * @param {number} y1 点y坐标
+     * @param {number} x2 对角点x坐标
+     * @param {number} y2 对角点y坐标
+     * @param {number} style 风格: 0偶数时虚线,1实线
+     * @returns {any} return this
+     */
+    'p2Rect': function (x1, y1, x2, y2, style = 0) {
+        //
+        this.ctx.save();
+        // 线条风格
+        if (style % 2 == 0) {
+            this.ctx.setLineDash([2]);
+        }
+        // 水平线
+        this.ctx.beginPath();
+        this.ctx.moveTo(x1, y1);
+        this.ctx.lineTo(x2, y1);
+        this.ctx.lineTo(x2, y2);
+        this.ctx.lineTo(x1, y2);
+        this.ctx.closePath();
+        this.ctx.stroke();
+        this.ctx.restore();
+        return this;
+    }
+});
+
+factory.extend({
+    /**
+     * 画坐标系中的一点到x/y轴的垂直和水平连线
+     * 
+     * @param {number} x 点x坐标
+     * @param {number} y 点y坐标
+     * @param {number} style 风格: 0(原点在中心,虚线),1(同0,实线) 其它:指定原点,偶数虚线奇数实线
+     * @param {number} oX 原点x坐标
+     * @param {number} oY 原点y坐标
+     * @returns {any} return this
+     */
+    'pointVH': function (x, y, style = 0, oX = 0, oY = 0) {
+        if (style < 2) {
+            oX = this.canvas.width / 2;
+            oY = this.canvas.height / 2;
+        }
+        //
+        this.ctx.save();
+        this.ctx.translate(oX, oY);
+        // 线条风格
+        if (style % 2 == 0) {
+            this.ctx.setLineDash([2]);
+        }
+        // 水平线
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
+        this.ctx.lineTo(0, y);
+        // 垂直线
+        this.ctx.moveTo(x, y);
+        this.ctx.lineTo(x, 0);
+        this.ctx.stroke();
+        this.ctx.restore();
+        return this;
+    }
+});
+
+factory.extend({
+    /**
+     * 标记一个点,用于放大显示
+     * 
+     * @param {number} x 点x坐标
+     * @param {number} y 点y坐标
+     * @param {number} style 风格: 0(圆点),1(正方形)
+     * @param {number} cir 圆半径/正方形半边长
+     * @param {string} color 填充颜色.(fillStyle)
+     * @returns {any} return this
+     */
+    'pointTag': function (x, y, style = 0, cir = 3, color = 'black') {
+        //
+        this.ctx.save();
+        this.ctx.translate(x, y);
+        this.ctx.beginPath();
+        // 线条风格
+        if (style === 0) {
+            this.ctx.arc(0, 0, cir, 0, Math.PI * 2);
+        } else {
+            this.ctx.rect(-cir, -cir, cir * 2, cir * 2);
+        }
+        this.ctx.fillStyle = color;
+        this.ctx.fill();
+        this.ctx.restore();
+        return this;
+    }
+});
+
+factory.extend({
+    /**
+     * 用字母标记一个点
+     * 
+     * @param {number} x 点x坐标
+     * @param {number} y 点y坐标
+     * @param {string} char 字母
+     * @param {number} deg 极角(0~359). 点为圆心,字母标记在圆周的一个点上.X轴正方向为0度,顺时针.
+     * @param {number} cir 极径. 字母到点半径.
+     * @param {string} color 字母颜色.(fillStyle)
+     * @returns {any} return this
+     */
+    'pointChar': function (x, y, char, deg = 0, cir = 20, color = 'black') {
+        //
+        this.ctx.save();
+        this.ctx.translate(x, y);
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        //
+        let degR = deg * Math.PI / 180;
+        let charX = Math.cos(degR) * cir;
+        let charY = Math.sin(degR) * cir;
+        this.ctx.beginPath();
+        this.ctx.fillStyle = color;
+        this.ctx.fillText(char, charX, charY);
         this.ctx.restore();
         return this;
     }

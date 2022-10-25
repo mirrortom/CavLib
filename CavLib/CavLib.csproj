@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="doc\aid.part.cshtml" />
     <None Include="doc\dist.part.cshtml" />
     <None Include="doc\cavlib.part.cshtml" />
     <None Include="index.cshtml" />

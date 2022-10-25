@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <link href="/mirrorui/mirrorui.css" rel="stylesheet" />
-  <title>jslib-doc | Mirror Space</title>
+  <title>cavlib-doc | Mirror Space</title>
   <style>
     .page {
       display: grid;
@@ -26,24 +26,29 @@
   </style>
 </head>
 <body>
-
+  <script src="cavlib.js"></script>
   <div class="page">
-    <div class="menu-box">
-      <m-sidemenu class="sidemenu-box" id="main_menubox">
-        <ul class="sidemenu-group">
+    <div class="menu-box pd-l-10 pd-b-30">
+      <m-docmenu id="main_menubox">
+        <ul class="docmenu-group">
           <li>
-            <span class="sidemenu-label">About<i class="sidemenu-arrdown"></i></span>
+            <span class="docmenu-title"><i class="docmenu-open"></i>About</span>
           </li>
-          <li><a class="sidemenu-item" href="#about">关于</a></li>
-          <li><a class="sidemenu-item" href="#cavlib">cavlib</a></li>
+          <li><a class="docmenu-item" href="#about">关于</a></li>
+          <li><a class="docmenu-item" href="#cavlib">cavlib</a></li>
         </ul>
-        <ul class="sidemenu-group">
+        <ul class="docmenu-group">
           <li>
-            <span class="sidemenu-label">直线<i class="sidemenu-arrdown"></i></span>
+            <span class="docmenu-title"><i class="docmenu-open"></i>坐标系</span>
           </li>
-          <li><a class="sidemenu-item" href="#dist">2点距离</a></li>
+          <li><a class="docmenu-item" href="#xyAxis">xyAxis</a></li>
+          <li><a class="docmenu-item" href="#lineArrow">lineArrow</a></li>
+          <li><a class="docmenu-item" href="#p2Rect">p2Rect</a></li>
+          <li><a class="docmenu-item" href="#pointVH">pointVH</a></li>
+          <li><a class="docmenu-item" href="#pointTag">pointTag</a></li>
+          <li><a class="docmenu-item" href="#pointChar">pointChar</a></li>
         </ul>
-      </m-sidemenu>
+      </m-docmenu>
     </div>
     <div class="content pd-15">
       <div id="about">
@@ -54,10 +59,10 @@
       @*片段页路径实际上是Key,不能使用变量,否则会找不到页面*@
       @Include("/doc/cavlib.part.cshtml")
       @Include("/doc/dist.part.cshtml")
+      @Include("/doc/aid.part.cshtml")
     </div>
   </div>
   <script src="/jslib/jslib.js"></script>
-  <script src="cavlib.js"></script>
   <script src="/mirrorui/mirrorui.js"></script>
   <script>
     // 为主菜单绑定点击事件 点击后加上sidemenu-active类,标识为活动菜单

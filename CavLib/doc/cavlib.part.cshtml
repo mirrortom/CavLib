@@ -12,8 +12,12 @@
   <p>内部对象canvalib,是一个类数组对象.也是模仿jQuery的,里面包含canvas元素引用和ctx(2D)绘画对象和库提供的工具方法.</p>
   <pre class="bg-gray-lt">
 
-    // 类数组对象,存放用id选取的canvas元素和2D绘画对象. 
-    function canvalib(canvasId){}
+    // 类数组对象,存放用id选取的canvas元素和2D绘画对象.
+    // 返回this,可以链式调用 
+    function canvalib(canvasId){
+             ...
+             return this;
+    }
 
     // 属性
     this.canvas
@@ -25,16 +29,17 @@
     }
 
     // 引用对象 外部调用这个函数使用cavlib对象.
-    window.cavlib = factory
+    window.cavlib = factory;
      
 </pre>
   <br />
-  <p class="article-title">cavlib对象实例方法</p>
+  <p class="article-title">style实例方法</p>
+  <p>调用工厂函数实例化后,可以调用style给画布设置样式风格</p>
   <pre class="bg-gray-lt">
 
     // 给canva元素设置style
-    // 0:灰色背景 1:无背景
-    this.style(num = 0)
+    // 0:灰色背景,默认值 其它值:未实现
+    window.cavlib('canvasDomId').style(num = 0);
  
 </pre>
   <br />
@@ -46,4 +51,5 @@
     cavlib.extend(json)
 
 </pre>
+  <br />
 </div>
