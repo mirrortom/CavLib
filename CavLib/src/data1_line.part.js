@@ -10,15 +10,8 @@ let line = {};
  * @returns {number} 返回斜率(弧度)
  */
 line.getK = (p1, p2, p2x, p2y) => {
-    let x = 0, y = 0;
-    if (typeof p2x == "undefined") {
-        y = p2.y - p1.y
-        x = p2.x - p1.x;
-    } else {
-        y = p2y - p2;
-        x = p2x - p1;
-    }
-
+    let p = _checkP2(p1, p2, p2x, p2y);
+    let x = p.bx - p.ax, y = p.by - p.ay;
     // 水平线时
     if (y === 0) {
         return 0;
@@ -37,13 +30,8 @@ line.getK = (p1, p2, p2x, p2y) => {
  * @returns {number} 返回距离
  * */
 line.dist = (p1, p2, p2x, p2y) => {
-    if (typeof p2x == "undefined") {
-        let xd = p1.x - p2.x, yd = p1.y - p2.y;
-        return Math.sqrt(xd * xd + yd * yd);
-    } else {
-        let xd = p1 - p2x, yd = p2 - p2y;
-        return Math.sqrt(xd * xd + yd * yd);
-    }
+    let p = _checkP2(p1, p2, p2x, p2y);
+    return Math.sqrt(Math.pow(p.ax - p.bx, 2) + Math.pow(p.ay - p.by, 2));
 }
 // 
 factory.line = line;

@@ -48,6 +48,21 @@
             canvalib.prototype[name] = json[name];
         }
     };
+// 一些帮助方法
+/**
+ * 检查参数个数,返回2个点的坐标.一个对象,p{ax,ay,bx,by}
+ * @param {any} x1
+ * @param {any} y1
+ * @param {any} x2
+ * @param {any} y2
+ */
+_checkP2 = (p1, p2, p2x, p2y) => {
+    if (typeof p2x === "undefined") {
+        return { ax: p1.x, ay: p1.y, bx: p2.x, by: p2.y };
+    } else {
+        return { ax: p1, ay: p2, bx: p2x, by: p2y };
+    }
+}
 /**直线相关计算 */
 let line = {};
 /**
@@ -60,15 +75,8 @@ let line = {};
  * @returns {number} 返回斜率(弧度)
  */
 line.getK = (p1, p2, p2x, p2y) => {
-    let x = 0, y = 0;
-    if (typeof p2x == "undefined") {
-        y = p2.y - p1.y
-        x = p2.x - p1.x;
-    } else {
-        y = p2y - p2;
-        x = p2x - p1;
-    }
-
+    let p = _checkP2(p1, p2, p2x, p2y);
+    let x = p.bx - p.ax, y = p.by - p.ay;
     // 水平线时
     if (y === 0) {
         return 0;
@@ -87,13 +95,8 @@ line.getK = (p1, p2, p2x, p2y) => {
  * @returns {number} 返回距离
  * */
 line.dist = (p1, p2, p2x, p2y) => {
-    if (typeof p2x == "undefined") {
-        let xd = p1.x - p2.x, yd = p1.y - p2.y;
-        return Math.sqrt(xd * xd + yd * yd);
-    } else {
-        let xd = p1 - p2x, yd = p2 - p2y;
-        return Math.sqrt(xd * xd + yd * yd);
-    }
+    let p = _checkP2(p1, p2, p2x, p2y);
+    return Math.sqrt(Math.pow(p.ax - p.bx, 2) + Math.pow(p.ay - p.by, 2));
 }
 // 
 factory.line = line;
@@ -409,6 +412,34 @@ factory.extend({
     }
 });
 
+// ====
+// 平面图案绘画,比如画坐标系箭头辅助线等等.
+// 实例方法
+// ====
+factory.extend({
+    /**
+     * 两点间连线.
+     * @param {number} x1 点1的x坐标
+     * @param {number} y1 点1的y坐标
+     * @param {number} x2 点2的x坐标
+     * @param {number} y2 点2的y坐标
+     * @param {string} color 线条颜色
+     * @param {number} color 线条厚度
+     * @returns {any} return this
+     */
+    'line': function (x1, y1, x2, y2, color = 'black', lineWidth = 1) {
+        this.ctx.save();
+        this.ctx.beginPath();
+        this.ctx.moveTo(x1, y1);
+        this.ctx.lineTo(x2, y2);
+        this.ctx.strokeStyle = color;
+        this.ctx.lineWidth = lineWidth;
+        this.ctx.stroke();
+        this.ctx.restore();
+        return this;
+        return this;
+    }
+});
 // window上的引用名 "cavlib"
 win.cavlib = factory;
 }) (window);

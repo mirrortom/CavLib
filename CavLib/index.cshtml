@@ -41,12 +41,35 @@
           <li>
             <span class="docmenu-title"><i class="docmenu-open"></i>坐标系</span>
           </li>
+          
+          <li><a class="docmenu-item" href="#aid_about">概述</a></li>
           <li><a class="docmenu-item" href="#xyAxis">xyAxis</a></li>
           <li><a class="docmenu-item" href="#lineArrow">lineArrow</a></li>
           <li><a class="docmenu-item" href="#p2Rect">p2Rect</a></li>
           <li><a class="docmenu-item" href="#pointVH">pointVH</a></li>
           <li><a class="docmenu-item" href="#pointTag">pointTag</a></li>
           <li><a class="docmenu-item" href="#pointChar">pointChar</a></li>
+        </ul>
+        <ul class="docmenu-group">
+          <li>
+            <span class="docmenu-title"><i class="docmenu-open"></i>形状</span>
+          </li>
+          <li><a class="docmenu-item" href="#shape_line">直线</a></li>
+        </ul>
+        <ul class="docmenu-group">
+          <li>
+            <span class="docmenu-title"><i class="docmenu-open"></i>计算</span>
+          </li>
+          <li>
+            <ul class="docmenu-group">
+              <li>
+                <span class="docmenu-title"><i class="docmenu-open"></i>直线</span>
+              </li>
+              <li><a class="docmenu-item" href="#line_about">概述</a></li>
+              <li><a class="docmenu-item" href="#line_k">斜率</a></li>
+              <li><a class="docmenu-item" href="#line_dist">距离</a></li>
+            </ul>
+          </li>
         </ul>
       </m-docmenu>
     </div>
@@ -58,8 +81,9 @@
 
       @*片段页路径实际上是Key,不能使用变量,否则会找不到页面*@
       @Include("/doc/cavlib.part.cshtml")
-      @Include("/doc/dist.part.cshtml")
       @Include("/doc/aid.part.cshtml")
+      @Include("/doc/shapes.part.cshtml")
+      @Include("/doc/data1_line.part.cshtml")
     </div>
   </div>
   <script src="/jslib/jslib.js"></script>

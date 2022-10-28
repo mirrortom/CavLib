@@ -1,0 +1,89 @@
+﻿<div class="doc-part-box" id="line_about">
+  <h2>line{}</h2>
+  <p>cavlib的静态对象line,计算一些直线相关的数据.</p>
+  <pre class="bg-gray-lt">
+
+    cavlib.line;
+    // 两点间距离
+    cavlib.line.dist();
+    ...
+
+</pre>
+</div>
+
+<div class="doc-part-box" id="line_k">
+  <h2>getK</h2>
+  <p>获取两个点所在直线的斜率.如果与 X 轴平行,返回 0 ,与 Y 轴平行返回 null.</p>
+  <pre class="bg-gray-lt">
+
+    line.getK(p1, p2, p2x, p2y)
+
+</pre>
+  <ul class="list square">
+    <li>p1 : {x:number,y:number} 点1对象{x,y}或点1的x坐标</li>
+    <li>p2 : {x:number,y:number} 点2对象{x,y}或点1的y坐标</li>
+    <li>p2x : number 点2的x坐标</li>
+    <li>p2y : number 点2的y坐标</li>
+  </ul>
+  <canvas id="canv_line_k"></canvas>
+</div>
+
+<div class="doc-part-box" id="line_dist">
+  <h2>dist</h2>
+  <p>获取两点间距离</p>
+  <pre class="bg-gray-lt">
+
+    line.dist(p1, p2, p2x, p2y)
+
+</pre>
+  <ul class="list square">
+    <li>p1 : {x:number,y:number} 点1对象{x,y}或点1的x坐标</li>
+    <li>p2 : {x:number,y:number} 点2对象{x,y}或点1的y坐标</li>
+    <li>p2x : number 点2的x坐标</li>
+    <li>p2y : number 点2的y坐标</li>
+  </ul>
+  <canvas id="canv_line_dist"></canvas>
+</div>
+<script>
+  ((win) => {
+    let line = win.cavlib.line;
+    //
+    let canv = win.cavlib('canv_line_k').style();
+    let ctx = canv.ctx;
+    ctx.font = '16px serial';
+    canv.xyAxis();
+    //
+    let a1 = { x: 20, y: 20 }, a2 = { x: 200, y: 20 };
+    let b1 = { x: 250, y: 20 }, b2 = { x: 250, y: 130 };
+    let c1 = { x: 220, y: 20 }, c2 = { x: 30, y: 130 };
+    canv.line(a1.x, a1.y, a2.x, a2.y, 'red');
+    canv.line(b1.x, b1.y, b2.x, b2.y, 'blue');
+    canv.line(c1.x, c1.y, c2.x, c2.y, 'green');
+    //
+    canv.pointChar(a1.x, a1.y, 'k= ' + line.getK(a1, a2), 90);
+    canv.pointChar(b2.x, b2.y, 'k= ' + line.getK(b1, b2), 90, 10);
+    canv.pointChar(c2.x + 100, c2.y, 'k= ' + line.getK(c1, c2), 270);
+
+  })(window);
+
+  ((win) => {
+    let line = win.cavlib.line;
+    //
+    let canv = win.cavlib('canv_line_dist').style();
+    let ctx = canv.ctx;
+    ctx.font = '16px serial';
+    canv.xyAxis();
+    //
+    let a1 = { x: 20, y: 20 }, a2 = { x: 200, y: 20 };
+    let b1 = { x: 50, y: 50 }, b2 = { x: 250, y: 50 };
+    let c1 = { x: 20, y: 130 }, c2 = { x: 130, y: 130 };
+    canv.line(a1.x, a1.y, a2.x, a2.y, 'red');
+    canv.line(b1.x, b1.y, b2.x, b2.y, 'blue');
+    canv.line(c1.x, c1.y, c2.x, c2.y, 'green');
+    //
+    canv.pointChar(a2.x, a2.y, 'len= ' + line.dist(a1, a2), 90);
+    canv.pointChar(b2.x, b2.y, 'len= ' + line.dist(b1, b2), 90);
+    canv.pointChar(c2.x, c2.y, 'len= ' + line.dist(c1, c2), 0,60);
+
+  })(window);
+</script>

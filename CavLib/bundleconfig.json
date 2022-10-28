@@ -3,12 +3,15 @@
     "outputFileName": "cavlib.js",
     "inputFiles": [
       "src/1start.part.js",
-      // 坐标点计算
+      // 
+      "src/help.part.js",
+      // 直线,圆相关数据计算
       "src/data1_line.part.js",
       "src/data2_cirs.part.js",
       // 绘画
       "src/aid.part.js",
       "src/curve.part.js",
+      "src/shapes.part.js",
       //
       "src/2end.part.js"
     ],

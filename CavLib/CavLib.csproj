@@ -37,6 +37,8 @@
     <Content Include="src\1start.part.js" />
     <Content Include="src\2end.part.js" />
     <Content Include="src\aid.part.js" />
+    <Content Include="src\help.part.js" />
+    <Content Include="src\shapes.part.js" />
     <Content Include="src\curve.part.js" />
     <Content Include="src\data1_line.part.js" />
     <Content Include="src\data2_cirs.part.js" />
@@ -44,7 +46,8 @@
   <ItemGroup>
     <None Include="bundleconfig.json" />
     <None Include="doc\aid.part.cshtml" />
-    <None Include="doc\dist.part.cshtml" />
+    <None Include="doc\shapes.part.cshtml" />
+    <None Include="doc\data1_line.part.cshtml" />
     <None Include="doc\cavlib.part.cshtml" />
     <None Include="index.cshtml" />
     <None Include="publish.json" />
