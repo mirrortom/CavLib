@@ -31,6 +31,14 @@ line.getK = (p1, p2, p2x, p2y) => {
  * */
 line.dist = (p1, p2, p2x, p2y) => {
     let p = _checkP2(p1, p2, p2x, p2y);
+    // 水平线
+    if (p.ay == p.by) {
+        return Math.abs(p.ax - p.bx);
+    }
+    // 垂直线
+    if (p.ax == p.bx) {
+        return Math.abs(p.ay - p.by);
+    }
     return Math.sqrt(Math.pow(p.ax - p.bx, 2) + Math.pow(p.ay - p.by, 2));
 }
 // 

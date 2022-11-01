@@ -1,1 +1,64 @@
-﻿
+﻿<div class="doc-part-box" id="shape_line">
+  <h2>line</h2>
+  <p>画经过两点的线段</p>
+  <pre class="bg-gray-lt">
+
+    this.line(x1, y1, x2, y2, color = 'black', lineWidth = 1)
+
+</pre>
+  <ul class="list square">
+    <li>x1 : number 点1的x坐标</li>
+    <li>y1 : number 点1的y坐标</li>
+    <li>x2 : number 点2的x坐标</li>
+    <li>y2 : number 点2的y坐标</li>
+    <li>color : string 线条颜色</li>
+    <li>lineWidth : number 线条厚度</li>
+  </ul>
+  <canvas id="canv_shape_line"></canvas>
+</div>
+
+<div class="doc-part-box" id="shape_fillArea">
+  <h2>fillArea</h2>
+  <p>填充路径区域</p>
+  <pre class="bg-gray-lt">
+
+    this.fillArea(points, color = 'black', rule = 0)
+
+</pre>
+  <ul class="list square">
+    <li>points : Array(Array(number)) 构成路径区域的坐标点数组,每个元素是含2个坐标值的数组[[x,y],[x1,y1],]</li>
+    <li>color : string 填充颜色</li>
+    <li>rule : number 0=nonzero(非零环绕规则,默认),1=evenodd(奇偶环绕规则)</li>
+  </ul>
+  <canvas id="canv_shape_fillArea"></canvas>
+</div>
+<script>
+  ((win) => {
+    let canv = win.cavlib('canv_shape_line').style();
+    let ctx = canv.ctx;
+    //
+
+    let lines = [
+      [20, 20, 240, 20, 'blue'],
+      [20, 50, 280, 120, 'red'],
+      [20, 120, 240, 40, 'green'],
+      [290, 20, 290, 140, 'orange']
+    ];
+
+    for (var i = 0; i < lines.length; i++) {
+      let p = lines[i];
+      canv.line(p[0], p[1], p[2], p[3], p[4]);
+    }
+
+  })(window);
+
+  ((win) => {
+    let canv = win.cavlib('canv_shape_fillArea').style();
+    let ctx = canv.ctx;
+    //
+    canv.fillArea([[20, 20], [40, 20], [30, 60]]);
+    canv.fillArea([[20, 60], [40, 60], [70, 100], [30, 100]], 'green');
+    canv.fillArea([[120, 60], [140, 60], [170, 100], [230, 140],[90,120]], 'red');
+
+  })(window);
+</script>

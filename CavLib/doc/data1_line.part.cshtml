@@ -75,15 +75,18 @@
     canv.xyAxis();
     //
     let a1 = { x: 20, y: 20 }, a2 = { x: 200, y: 20 };
-    let b1 = { x: 50, y: 50 }, b2 = { x: 250, y: 50 };
+    let b1 = { x: 50, y: 100 }, b2 = { x: 250, y: 50 };
     let c1 = { x: 20, y: 130 }, c2 = { x: 130, y: 130 };
+    let d1 = { x: 30, y: 40 }, d2 = { x: 230, y: 130 };
     canv.line(a1.x, a1.y, a2.x, a2.y, 'red');
     canv.line(b1.x, b1.y, b2.x, b2.y, 'blue');
     canv.line(c1.x, c1.y, c2.x, c2.y, 'green');
+    canv.line(d1.x, d1.y, d2.x, d2.y, 'gold');
     //
-    canv.pointChar(a2.x, a2.y, 'len= ' + line.dist(a1, a2), 90);
-    canv.pointChar(b2.x, b2.y, 'len= ' + line.dist(b1, b2), 90);
-    canv.pointChar(c2.x, c2.y, 'len= ' + line.dist(c1, c2), 0,60);
+    canv.pointChar(a2.x, a2.y, 'd= ' + line.dist(a1, a2));
+    canv.pointChar(b2.x, b2.y, 'd= ' + line.dist(b1, b2).toFixed(2), 90);
+    canv.pointChar(c1.x, c1.y, 'd= ' + line.dist(c1, c2), 315);
+    canv.pointChar(d2.x, d2.y, 'd= ' + line.dist(d1, d2).toFixed(2), 270);
 
   })(window);
 </script>

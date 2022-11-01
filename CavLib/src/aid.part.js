@@ -57,7 +57,7 @@ factory.extend({
      * 画直角坐标轴辅助线:箭头方向:,X轴右方向,Y轴上方向
      * 
      * @param {number} style 风格: 0(原点在中心,轴长等于画布长,虚线),1(同0,实线),2或以上(自定义原点位置和轴长,偶数时虚线)
-     * @param {number} oX 原点x坐标
+     * @param {number} oX 原点x坐标(以画布左上角为(0,0)的坐标)
      * @param {number} oY 原点y坐标
      * @param {number} oXLen x正轴长度
      * @param {number} oYLen y正轴长度
@@ -67,14 +67,19 @@ factory.extend({
      */
     'xyAxis': function (style = 0, oX = 0, oY = 0, oXLen = 0, oYLen = 0, oXLen1 = 0, oYLen1 = 0) {
         let x = oX, y = oY, y, xlen = oXLen, ylen = oYLen, xlen1 = oXLen1, ylen1 = oYLen1;
+        let w = this.canvas.width, h = this.canvas.height;
         if (style < 2) {
-            x = this.canvas.width / 2;
-            y = this.canvas.height / 2;
-            xlen = x;
-            ylen = y;
-            xlen1 = x;
-            ylen1 = y;
+            x = w / 2;
+            y = h / 2;
         }
+        if (xlen == 0)
+            xlen = w - x;
+        if (ylen == 0)
+            ylen = y;
+        if (xlen1 == 0)
+            xlen1 = x;
+        if (ylen1 == 0)
+            ylen1 = h - y;
         //
         this.ctx.save();
         this.ctx.translate(x, y);
@@ -100,15 +105,17 @@ factory.extend({
      * @param {number} x2 对角点x坐标
      * @param {number} y2 对角点y坐标
      * @param {number} style 风格: 0偶数时虚线,1实线
+     * @param {string} color 线条颜色.(strokeStyle)
      * @returns {any} return this
      */
-    'p2Rect': function (x1, y1, x2, y2, style = 0) {
+    'p2Rect': function (x1, y1, x2, y2, style = 0, color = 'black') {
         //
         this.ctx.save();
         // 线条风格
         if (style % 2 == 0) {
             this.ctx.setLineDash([2]);
         }
+        this.ctx.strokeStyle = color;
         // 水平线
         this.ctx.beginPath();
         this.ctx.moveTo(x1, y1);
@@ -126,14 +133,15 @@ factory.extend({
     /**
      * 画坐标系中的一点到x/y轴的垂直和水平连线
      * 
-     * @param {number} x 点x坐标
+     * @param {number} x 点x坐标(在以oX,oY为原点的坐标系)
      * @param {number} y 点y坐标
      * @param {number} style 风格: 0(原点在中心,虚线),1(同0,实线) 其它:指定原点,偶数虚线奇数实线
+     * @param {string} color 线条颜色.(strokeStyle)
      * @param {number} oX 原点x坐标
      * @param {number} oY 原点y坐标
      * @returns {any} return this
      */
-    'pointVH': function (x, y, style = 0, oX = 0, oY = 0) {
+    'pointVH': function (x, y, style = 0, color = 'black', oX = 0, oY = 0) {
         if (style < 2) {
             oX = this.canvas.width / 2;
             oY = this.canvas.height / 2;
@@ -145,6 +153,7 @@ factory.extend({
         if (style % 2 == 0) {
             this.ctx.setLineDash([2]);
         }
+        this.ctx.strokeStyle = color;
         // 水平线
         this.ctx.beginPath();
         this.ctx.moveTo(x, y);
@@ -164,12 +173,12 @@ factory.extend({
      * 
      * @param {number} x 点x坐标
      * @param {number} y 点y坐标
+     * @param {string} color 填充颜色.(fillStyle)
      * @param {number} style 风格: 0(圆点),1(正方形)
      * @param {number} cir 圆半径/正方形半边长
-     * @param {string} color 填充颜色.(fillStyle)
      * @returns {any} return this
      */
-    'pointTag': function (x, y, style = 0, cir = 3, color = 'black') {
+    'pointTag': function (x, y, color = 'black', style = 0, cir = 3) {
         //
         this.ctx.save();
         this.ctx.translate(x, y);
@@ -195,11 +204,11 @@ factory.extend({
      * @param {number} y 点y坐标
      * @param {string} char 字母
      * @param {number} deg 极角(0~359). 点为圆心,字母标记在圆周的一个点上.X轴正方向为0度,顺时针.
-     * @param {number} cir 极径. 字母到点半径.
      * @param {string} color 字母颜色.(fillStyle)
+     * @param {number} cir 极径. 字母到点半径.
      * @returns {any} return this
      */
-    'pointChar': function (x, y, char, deg = 0, cir = 20, color = 'black') {
+    'pointChar': function (x, y, char, deg = 0, color = 'black', cir = 20) {
         //
         this.ctx.save();
         this.ctx.translate(x, y);
