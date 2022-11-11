@@ -32,6 +32,29 @@
         }
         return this;
     }
+    //=================================
+    // 定义几个常用属性
+    // defineProperty文档: https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
+    //=================================
+    // 获取画布宽度
+    Object.defineProperty(canvalib.prototype, 'width', {
+        get() {
+            return this.ctx.canvas.width;
+        },
+        set(val) {
+            this.ctx.canvas.width = val;
+        }
+    });
+    // 获取画布高度
+    Object.defineProperty(canvalib.prototype, 'height', {
+        get() {
+            return this.ctx.canvas.height;
+        },
+        set(val) {
+            this.ctx.canvas.height = val;
+        }
+    });
+
     //================================================================================//
     // 工厂函数factory,返回canvalib对象
     // 其它静态方法都绑定在factory上
@@ -57,7 +80,7 @@
  * @param {any} y2
  */
 _checkP2 = (p1, p2, p2x, p2y) => {
-    if (typeof p2x === "undefined") {
+    if (typeof p1 === "object" && p1.hasOwnProperty('x')) {
         return { ax: p1.x, ay: p1.y, bx: p2.x, by: p2.y };
     } else {
         return { ax: p1, ay: p2, bx: p2x, by: p2y };

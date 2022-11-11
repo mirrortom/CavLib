@@ -7,7 +7,7 @@
  * @param {any} y2
  */
 _checkP2 = (p1, p2, p2x, p2y) => {
-    if (typeof p2x === "undefined") {
+    if (typeof p1 === "object" && p1.hasOwnProperty('x')) {
         return { ax: p1.x, ay: p1.y, bx: p2.x, by: p2.y };
     } else {
         return { ax: p1, ay: p2, bx: p2x, by: p2y };
