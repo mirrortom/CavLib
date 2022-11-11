@@ -9,6 +9,8 @@
     ...
 
 </pre>
+  <p>需要注意的是,点的坐标值都是平面直角坐标系里的.这和canvas的坐标系不同,canvas向下和向右坐标值是正值,而平面直角坐标系向上和向右是正值,也就是说,Y坐标的值相反!所以,传入参数时,如果是canvas坐标值,那么Y值要传-Y.</p>
+  <canvas id="canv_line_about"></canvas>
 </div>
 
 <div class="doc-part-box" id="line_k">
@@ -46,6 +48,20 @@
 </div>
 <script>
   ((win) => {
+    let canv = win.cavlib('canv_line_about').style();
+    let ctx = canv.ctx;
+    ctx.font = '16px serial';
+    canv.xyAxis();
+    //
+    ctx.translate(canv.canvas.width / 2, canv.canvas.height / 2);
+    let a = { x: 100, y: 30 };
+    canv.pointTag(a.x, a.y, 'orangered');
+    canv.pointVH(a.x, a.y,4,'blue');
+    canv.pointChar(a.x, a.y, `Canvas: A(${a.x},${a.y})`,135,'black',30);
+    canv.pointChar(a.x, a.y, `数学: A(${a.x},-${a.y})`, 240, 'red',60);
+  })(window);
+
+  ((win) => {
     let line = win.cavlib.line;
     //
     let canv = win.cavlib('canv_line_k').style();
@@ -53,16 +69,17 @@
     ctx.font = '16px serial';
     canv.xyAxis();
     //
-    let a1 = { x: 20, y: 20 }, a2 = { x: 200, y: 20 };
-    let b1 = { x: 250, y: 20 }, b2 = { x: 250, y: 130 };
-    let c1 = { x: 220, y: 20 }, c2 = { x: 30, y: 130 };
+    ctx.translate(canv.canvas.width / 2, canv.canvas.height / 2);
+    let a1 = { x: -120, y: -30 }, a2 = { x: 120, y: -30 };
+    let b1 = { x: 130, y: -60 }, b2 = { x: 130, y: 60 };
+    let c1 = { x: -90, y: 50 }, c2 = { x: 60, y: -20 };
     canv.line(a1.x, a1.y, a2.x, a2.y, 'red');
     canv.line(b1.x, b1.y, b2.x, b2.y, 'blue');
     canv.line(c1.x, c1.y, c2.x, c2.y, 'green');
     //
-    canv.pointChar(a1.x, a1.y, 'k= ' + line.getK(a1, a2), 90);
-    canv.pointChar(b2.x, b2.y, 'k= ' + line.getK(b1, b2), 90, 10);
-    canv.pointChar(c2.x + 100, c2.y, 'k= ' + line.getK(c1, c2), 270);
+    canv.pointChar(a1.x, a1.y, 'k= ' + line.getK(a1.x, -a1.y, a2.x, -a2.y), 90);
+    canv.pointChar(b2.x, b2.y, 'k= ' + line.getK(b1.x, -b1.y, b2.x, -b2.y), 180, 'black', 30);
+    canv.pointChar(c1.x, c1.y, 'k= ' + line.getK(c1.x, -c1.y, c2.x, -c2.y).toFixed(4), 90);
 
   })(window);
 
